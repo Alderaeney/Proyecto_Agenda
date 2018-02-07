@@ -12,7 +12,18 @@ public class Pagina {
         this.citas = new ArrayList<>();
     }
 
+    public void anadirCita(Cita c){
+        this.citas.add(c);
+    }
 
+    public void borrarCita(Cita c){
+        for (Cita d :
+                this.citas) {
+            if (d.getHora() == d.getHora() && d.getMinutos() == c.getMinutos()) {
+                this.citas.remove(d);
+            }
+        }
+    }
 
     public int getDia() {
         return dia;
