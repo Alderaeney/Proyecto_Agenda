@@ -25,6 +25,34 @@ public class Pagina {
         }
     }
 
+    public Cita buscarCita(int hora, int minutos){
+        Cita busqueda = null, temp;
+        int cont = 0;
+        boolean encontrado = false;
+
+        while (cont < this.citas.size() && !encontrado){
+            temp = this.citas.get(cont++);
+            if (temp.getHora() == hora && temp.getMinutos() == minutos){
+                busqueda = temp;
+                encontrado = true;
+            }
+        }
+        return busqueda;
+    }
+
+    public void leerPagina(){
+        StringBuilder st = new StringBuilder(this.getDia() + "/" + this.getMes() + "\n");
+        if (this.citas.isEmpty()){
+            st.append("La página está en blanco.\n");
+        } else {
+            for (Cita c :
+                    this.citas) {
+                st.append(c.leerCita());
+            }
+            System.out.println(st.toString());
+        }
+    }
+
     public int getDia() {
         return dia;
     }
