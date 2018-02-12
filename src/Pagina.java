@@ -16,11 +16,17 @@ public class Pagina {
         this.citas.add(c);
     }
 
-    public void borrarCita(Cita c){
-        for (Cita d :
-                this.citas) {
-            if (d.getHora() == d.getHora() && d.getMinutos() == c.getMinutos()) {
-                this.citas.remove(d);
+    public void borrarCita(int hora, int minutos){
+        if (this.getCitas().size() == 1){
+            if (this.getCitas().get(0).getHora() == hora && this.getCitas().get(0).getMinutos() == minutos){
+                this.getCitas().clear();
+            }
+        } else {
+            for (Cita d :
+                    this.citas) {
+                if (d.getHora() == hora && d.getMinutos() == minutos) {
+                    this.citas.remove(d);
+                }
             }
         }
     }

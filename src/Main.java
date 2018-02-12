@@ -35,48 +35,70 @@ public class Main {
                     hora = scanner.nextInt();
                     System.out.print("Introduce minutos: ");
                     minutos = scanner.nextInt();
-                    agenda.getPaginaAbierta().anadirCita(new Cita(titulo, descripcion, hora, minutos));
-                    for (Cita c :
-                            agenda.buscarPagina(dia, mes).getCitas()) {
-                        System.out.println(c.leerCita());
-                    }
+                    if (comprovarHores(hora, minutos)){
+                        agenda.getPaginaAbierta().anadirCita(new Cita(titulo, descripcion, hora, minutos));
+                        for (Cita c :
+                                agenda.buscarPagina(dia, mes).getCitas()) {
+                            System.out.println(c.leerCita());
+                        }
+                    } else System.out.println("Hora o minutos incorrectos.");
                     break;
 
                 case 2:
-                    System.out.print("Introduce hora: ");
-                    hora = scanner.nextInt();
-                    System.out.print("Introduce minutos: ");
-                    minutos = scanner.nextInt();
-                    agenda.getPaginaAbierta().borrarCita(new Cita("", "", hora, minutos));
-                    for (Cita c :
-                            agenda.buscarPagina(dia, mes).getCitas()) {
-                        System.out.println(c.leerCita());
+                    if (agenda.getPaginaAbierta().getCitas().size() == 0){
+                        System.out.println("No hay citas.");
+                    } else {
+                        System.out.print("Introduce hora: ");
+                        hora = scanner.nextInt();
+                        System.out.print("Introduce minutos: ");
+                        minutos = scanner.nextInt();
+                        if (comprovarHores(hora, minutos)) {
+                            agenda.getPaginaAbierta().borrarCita(hora, minutos);
+                            for (Cita c :
+                                    agenda.buscarPagina(dia, mes).getCitas()) {
+                                System.out.println(c.leerCita());
+                            }
+                        } else System.out.println("Hora o minutos incorrectos.");
                     }
                     break;
 
                 case 3:
-                    System.out.print("Introduce hora: ");
-                    hora = scanner.nextInt();
-                    System.out.print("Introduce minutos: ");
-                    minutos = scanner.nextInt();
-                    System.out.println(agenda.getPaginaAbierta().buscarCita(hora, minutos).leerCita());
-                    for (Cita c :
-                            agenda.buscarPagina(dia, mes).getCitas()) {
-                        System.out.println(c.leerCita());
+                    if (agenda.getPaginaAbierta().getCitas().size() == 0){
+                        System.out.println("No hay citas.");
+                    } else {
+                        System.out.print("Introduce hora: ");
+                        hora = scanner.nextInt();
+                        System.out.print("Introduce minutos: ");
+                        minutos = scanner.nextInt();
+                        if (comprovarHores(hora, minutos)){
+                            System.out.println(agenda.getPaginaAbierta().buscarCita(hora, minutos).leerCita());
+                            for (Cita c :
+                                    agenda.buscarPagina(dia, mes).getCitas()) {
+                                System.out.println(c.leerCita());
+                            }
+                        } else System.out.println("Hora o minutos incorrectos.");
                     }
                     break;
 
                 case 4:
-                    System.out.print("Introduce hora: ");
-                    hora = scanner.nextInt();
-                    System.out.print("Introduce minutos: ");
-                    minutos = scanner.nextInt();
-                    System.out.print("Introduce texto a cambiar: ");
-                    descripcion = scanner.nextLine();
-                    agenda.getPaginaAbierta().buscarCita(hora, minutos).setDescripcion(descripcion);
-                    for (Cita c :
-                            agenda.buscarPagina(dia, mes).getCitas()) {
-                        System.out.println(c.leerCita());
+                    if (agenda.getPaginaAbierta().getCitas().size() == 0){
+                        System.out.println("No hay citas.");
+                    } else {
+                        System.out.print("Introduce hora: ");
+                        hora = scanner.nextInt();
+                        System.out.print("Introduce minutos: ");
+                        minutos = scanner.nextInt();
+                        if (comprovarHores(hora, minutos)) {
+                            System.out.print("Introduce texto a cambiar: ");
+                            scanner.nextLine();
+                            descripcion = scanner.nextLine();
+
+                            agenda.getPaginaAbierta().buscarCita(hora, minutos).setDescripcion(descripcion);
+                            for (Cita c :
+                                    agenda.buscarPagina(dia, mes).getCitas()) {
+                                System.out.println(c.leerCita());
+                            }
+                        } else System.out.println("Hora o minutos incorrectos.");
                     }
                     break;
 
@@ -111,5 +133,12 @@ public class Main {
                 return dia > 0 && dia <= 30;
             }
         } else return false;
+    }
+    private static boolean comprovarHores(int hora, int minutos){
+        if (hora >= 0 && hora < 24){
+            return minutos >= 0 && minutos < 60;
+        } else {
+            return false;
+        }
     }
 }
