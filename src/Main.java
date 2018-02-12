@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
-        Agenda agenda = new Agenda(Calendar.getInstance().get(Calendar.YEAR));
+        int ano = Calendar.getInstance().get(Calendar.YEAR);
+        Agenda agenda = new Agenda(ano);
         int opcion, mes, dia, hora, minutos;
         String titulo, descripcion;
         boolean correcto;
@@ -16,8 +17,7 @@ public class Main {
                 mes = scanner.nextInt();
                 System.out.print("Introduce dia: ");
                 dia = scanner.nextInt();
-                correcto = comprovarDiaMes(dia, mes);
-                if (correcto)
+                if (correcto = comprovarDiaMes(dia, mes, ano % 4 == 0))
                     System.out.println("Dia y mes correctos.");
                 else System.out.println("Dia o mes incorrectos.");
             } while (!correcto);
@@ -80,6 +80,10 @@ public class Main {
                     }
                     break;
 
+                case 0:
+                    System.out.println("Adios...");
+                    break;
+
                 default:
                     System.out.println("Opción incorrecta...");
                     break;
@@ -89,14 +93,14 @@ public class Main {
     }
 
     private static void menu() {
-        System.out.print("1.- Añadir cita\n2.- Borrar cita\n3.- Buscar cita\n4.- Modificar cita\n" +
+        System.out.print("1.- Añadir cita\n2.- Borrar cita\n3.- Buscar cita\n4.- Modificar cita\n0.- Salir\n" +
                 "Elige opción: ");
     }
 
-    private static boolean comprovarDiaMes(int dia, int mes) {
+    private static boolean comprovarDiaMes(int dia, int mes, boolean bisiesto) {
         if (mes > 0 && mes <= 12){
             if (mes == 2){
-                return dia > 0 && dia <= 28;
+                return dia > 0 && dia <= (bisiesto ? 29 : 28);
             } else if (mes % 2 == 0 && mes < 7){
                 return dia > 0 && dia <= 30;
             } else if (mes % 2 != 0 && mes < 8){
